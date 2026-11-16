@@ -86,6 +86,11 @@ void Game::Render() const
     {   Console::WordWrap(WINDOW_WIDTH / 4, WINDOW_HEIGHT / 2, WINDOW_WIDTH * 3/4, "Congrats, you win! Press 'R' to play again.");
     }
     
+    if (ball.y_position >= WINDOW_HEIGHT - 1)
+    {
+        Console::WordWrap(WINDOW_WIDTH / 4, WINDOW_HEIGHT / 2, WINDOW_WIDTH * 3 / 4, "Yikes, defeat! Press 'R' to play again.");
+    }
+
     Console::Lock(false);
 
 }
@@ -115,5 +120,9 @@ void Game::CheckCollision()
 	{   ball.y_velocity *= -1;
 	}
 
-	// TODO #7 - If ball touches bottom of window, pause ball and display (render) defeat text with R to reset
+	// DONE #7 - If ball touches bottom of window, pause ball and display (render) defeat text with R to reset
+    if (ball.y_position >= WINDOW_HEIGHT - 1) 
+    {
+        ball.moving = false;
+    }
 }
