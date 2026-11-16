@@ -10,7 +10,7 @@ void Game::Reset()
 {   bricks.clear();
 
     Console::SetWindowSize(WINDOW_WIDTH, WINDOW_HEIGHT);
-	Console::CursorVisible(false);
+    Console::CursorVisible(false);
 	paddle.width = 12;
 	paddle.height = 2;
 	paddle.x_position = 32;
@@ -30,6 +30,7 @@ void Game::Reset()
 	brick.doubleThick = true;
 	brick.color = ConsoleColor::DarkGreen;
 
+    
 	for (int i = 0; i < 5; ++i)  // used for loop to keep from doing repeated code
     {   brick.x_position = i * 12;
         bricks.push_back(brick);
@@ -71,7 +72,7 @@ bool Game::Update()
 void Game::Render() const
 {
 	Console::Lock(true);
-	Console::Clear();
+	Console::Clear(); 
 	
 	paddle.Draw();
 	ball.Draw();
@@ -81,8 +82,12 @@ void Game::Render() const
     {   bricks[i].Draw();
     }
     
+    if (bricks.empty())
+    {   Console::WordWrap(WINDOW_WIDTH / 4, WINDOW_HEIGHT / 2, WINDOW_WIDTH * 3/4, "Congrats, you win! Press 'R' to play again.");
+    }
+    
+    Console::Lock(false);
 
-	Console::Lock(false);
 }
 
 void Game::CheckCollision()
@@ -101,12 +106,13 @@ void Game::CheckCollision()
         }
     }
 
-	// TODO #6 - If no bricks remain, pause ball and display (render) victory text with R to reset
-
+	// DONE #6 - If no bricks remain, pause ball and display (render) victory text with R to reset
+    if (bricks.empty())
+    {   ball.moving = false;
+    }
 
 	if (paddle.Contains(ball.x_position + ball.x_velocity, ball.y_velocity + ball.y_position))
-	{
-		ball.y_velocity *= -1;
+	{   ball.y_velocity *= -1;
 	}
 
 	// TODO #7 - If ball touches bottom of window, pause ball and display (render) defeat text with R to reset
