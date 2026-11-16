@@ -20,7 +20,7 @@ void Game::Reset()
 	ball.color = ConsoleColor::Cyan;
 	ResetBall();
 
-	// TODO #2 - Add this brick and 4 more bricks to the vector
+	// DONE #2 - Add this brick and 4 more bricks to the vector
 	Box brick;
 
 	brick.width = 10;
@@ -30,7 +30,7 @@ void Game::Reset()
 	brick.doubleThick = true;
 	brick.color = ConsoleColor::DarkGreen;
 
-	for (int i = 0; i < 5; ++i)
+	for (int i = 0; i < 5; ++i)  // used for loop to keep from doing repeated code
     {
         brick.x_position = i * 12;
         bricks.push_back(brick);
@@ -77,8 +77,12 @@ void Game::Render() const
 	paddle.Draw();
 	ball.Draw();
 
-	// TODO #3 - Update render to render all bricks
-	brick.Draw();
+	// DONE #3 - Update render to render all bricks
+    for (int i = 0; i < bricks.size(); i++)
+    {
+        bricks[i].Draw();
+    }
+    
 
 	Console::Lock(false);
 }
